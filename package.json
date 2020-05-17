@@ -22,6 +22,8 @@
     "build:angular": "ng build angular-zipkin",
     "build:zipkin": "ng build ng-zipkin",
     "test": "ng test",
+    "test:zipkin": "ng test ng-zipkin",
+    "test:zipkin:ci": "ng test ng-zipkin --browsers=ChromeNoSandbox --progress=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
