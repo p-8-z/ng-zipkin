@@ -39,6 +39,3 @@ interface ZipkinConfig {
 ```
 
 Module is in alpha stage. Some of the logic may change.
-
-## Info
-This library was build with [@angular-devkit/build-ng-packagr](https://github.com/angular/angular-cli) version 0.901.6.
