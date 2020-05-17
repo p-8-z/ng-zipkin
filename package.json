@@ -1,0 +1,66 @@
+{
+  "name": "ng-zipkin-project",
+  "version": "0.0.0",
+  "description": "Angular Module For Zipkin Tracing",
+  "homepage": "https://github.com/p-8-z/ng-zipkin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/p-8-z/ng-zipkin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/p-8-z/ng-zipkin/issues"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:express": "npm run build:express && node ./projects/express-zipkin/dist/express.js",
+    "start:angular": "ng build ng-zipkin && ng serve angular-zipkin",
+    "start:zipkin": "docker container start zipkin || docker run --name zipkin -p 9411:9411 -d openzipkin/zipkin-slim",
+    "stop:zipkin": "docker container stop zipkin",
+    "build": "ng build",
+    "build:express": "tsc -p ./projects/express-zipkin",
+    "build:angular": "ng build angular-zipkin",
+    "build:zipkin": "ng build ng-zipkin",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~9.1.7",
+    "@angular/common": "~9.1.7",
+    "@angular/compiler": "~9.1.7",
+    "@angular/core": "~9.1.7",
+    "@angular/forms": "~9.1.7",
+    "@angular/platform-browser": "~9.1.7",
+    "@angular/platform-browser-dynamic": "~9.1.7",
+    "@angular/router": "~9.1.7",
+    "rxjs": "~6.5.4",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.10.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.901.6",
+    "@angular-devkit/build-ng-packagr": "~0.901.6",
+    "@angular/cli": "~9.1.6",
+    "@angular/compiler-cli": "~9.1.7",
+    "@types/node": "^12.11.1",
+    "@types/jasmine": "~3.5.0",
+    "@types/jasminewd2": "~2.0.3",
+    "codelyzer": "^5.1.2",
+    "jasmine-core": "~3.5.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~5.0.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "~2.1.0",
+    "karma-jasmine": "~3.0.1",
+    "karma-jasmine-html-reporter": "^1.4.2",
+    "ng-packagr": "^9.0.0",
+    "protractor": "~5.4.3",
+    "ts-node": "~8.3.0",
+    "tslint": "~6.1.0",
+    "typescript": "~3.8.3"
+  },
+  "author": "p8z",
+  "license": "MIT"
+}

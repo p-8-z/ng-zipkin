@@ -1,0 +1,23 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "esnext",
+    "lib": [
+      "es6",
+      "dom"
+    ]
+  },
+  "include": [
+    "node_modules/*",
+    "src/*"
+  ]
+}

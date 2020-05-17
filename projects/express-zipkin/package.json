@@ -1,0 +1,14 @@
+{
+  "name": "express-zipkin",
+  "version": "0.0.0",
+  "description": "Express backend for testing",
+  "author": "p8z",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.0",
+    "zipkin": "^0.21.0",
+    "zipkin-instrumentation-express": "^0.21.0",
+    "zipkin-transport-http": "^0.21.0"
+  }
+}

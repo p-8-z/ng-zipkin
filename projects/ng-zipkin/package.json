@@ -1,0 +1,26 @@
+{
+  "name": "ng-zipkin",
+  "version": "0.0.2",
+  "description": "Angular Module For Zipkin Tracing",
+  "homepage": "https://github.com/p-8-z/ng-zipkin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/p-8-z/ng-zipkin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/p-8-z/ng-zipkin/issues"
+  },
+  "peerDependencies": {
+    "@angular/common": "^9.1.7",
+    "@angular/core": "^9.1.7",
+    "tslib": "^1.10.0"
+  },
+  "private": false,
+  "keywords": [
+    "zipkin",
+    "angular",
+    "tracing"
+  ],
+  "author": "p8z",
+  "license": "MIT"
+}
