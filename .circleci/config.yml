@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - run: npm ci
-      - run: 'npm run build:ng-zipkin'
+      - run: 'npm run build:zipkin'
       - save_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
