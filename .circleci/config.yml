@@ -17,7 +17,8 @@ jobs:
   test:
     docker:
       - image: circleci/node:12-browsers
-    requires: build
+    requires:
+      - build
     steps:
       - restore_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
