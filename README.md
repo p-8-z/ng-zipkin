@@ -1,6 +1,7 @@
 # Zipkin Tracing
 
-Zero dependency Zipkin Tracing Module. With Plug&Play modularity in mind.
+Zero dependency Zipkin Tracing Module. Works out of the box, just install 
+and import module to Angular application.
 
 Based on packages:
 - `zipkin` -> Git: [Zipkin JS](https://github.com/openzipkin/zipkin-js)
@@ -37,8 +38,3 @@ interface ZipkinConfig {
   zipkinConfig?: HttpConfigOptions;
 }
 ```
-
-Module is in alpha stage. Some of the logic may change.
-
-## Info
-This library was build with [@angular-devkit/build-ng-packagr](https://github.com/angular/angular-cli) version 0.901.1.

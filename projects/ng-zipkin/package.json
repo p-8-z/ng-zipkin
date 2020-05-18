@@ -1,6 +1,6 @@
 {
   "name": "ng-zipkin",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Angular Module For Zipkin Tracing",
   "homepage": "https://github.com/p-8-z/ng-zipkin#readme",
   "repository": {

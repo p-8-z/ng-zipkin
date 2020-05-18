@@ -1,6 +1,7 @@
 # Zipkin Tracing
 
-Zero dependency Zipkin Tracing Module. With Plug&Play modularity in mind.
+Zero dependency Zipkin Tracing Module. Works out of the box, just install 
+and import module to Angular application.
 
 Based on packages:
 - `zipkin` -> Git: [Zipkin JS](https://github.com/openzipkin/zipkin-js)
