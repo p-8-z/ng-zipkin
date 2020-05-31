@@ -1,5 +1,5 @@
-var_1: &docker_image circleci/node:12.9.1
-var_2: &docker-browser-image circleci/node:12.9.1-browsers
+var_1: &docker_image circleci/node:13
+var_2: &docker-browser-image circleci/node:13-browsers
 
 # Read more here: https://circleci.com/docs/2.0/caching/#restoring-cache.
 var_3: &cache_key ng-zipkin-{{ checksum "package-lock.json" }}
