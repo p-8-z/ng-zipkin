@@ -141,12 +141,12 @@ workflows:
   default_workflow:
     jobs:
       - build
-      - integration_tests
-        requires:
-          - build
-      - e2e_tests
-        requires:
-          - build
+      - integration_tests:
+          requires:
+            - build_release_packages
+      - e2e_tests:
+          requires:
+            - build
       - lint
       - build_release_packages:
           filters: *publish_branches_filter
