@@ -22,6 +22,7 @@ var_8: &save_cache
     key: *cache_key
     paths:
       - "node_modules"
+      - "dist"
 
 # Job step that ensures that the node module dependencies are installed and up-to-date.
 var_10: &npm_install
