@@ -72,7 +72,7 @@ jobs:
       - *npm_install
       - run:
           name: "Start integration tests"
-          command: npm run test:ci
+          command: xvfb-run npm run test:ci
 
   # -----------------------------------------------------------------
   # Job that runs the e2e tests with Protractor and Chromium headless
@@ -86,7 +86,7 @@ jobs:
       - *npm_install
       - run:
           name: "Start e2e tests"
-          command: npm run e2e:ci
+          command: xvfb-run npm run e2e:ci
 
   # -------------------------------------------------------------------------------------------
   # Job that builds all release packages.
@@ -140,12 +140,8 @@ workflows:
   default_workflow:
     jobs:
       - build
-      - integration_tests:
-          requires:
-            - build
-      - e2e_tests:
-          requires:
-            - build
+      - integration_tests
+      - e2e_tests
       - lint
       - build_release_packages:
           filters: *publish_branches_filter
