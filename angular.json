@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/ng-zipkin/tsconfig.lib.json",
             "project": "projects/ng-zipkin/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/zipkin-tracing/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {

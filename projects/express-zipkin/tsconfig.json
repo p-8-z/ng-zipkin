@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "../../dist/express-zipkin",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,

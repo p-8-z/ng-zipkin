@@ -1,16 +1,15 @@
 import {AppPage} from './app.po';
 import {browser, logging} from 'protractor';
 
-describe('workspace-project App', () => {
+describe('workspace-project angular-zipkin', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display page', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('angular-zipkin app is running!');
   });
 
   afterEach(async () => {

@@ -1,31 +1,148 @@
+var_1: &docker_image circleci/node:12.9.1
+
+# Read more here: https://circleci.com/docs/2.0/caching/#restoring-cache.
+var_3: &cache_key ng-zipkin-{{ checksum "package-lock.json" }}
+
+# Settings common to each job
+var_5: &job_defaults
+  docker:
+    - image: *docker_image
+
+# Restores the cache that could be available for the current Yarn lock file. The cache usually
+# includes the node modules and the Bazel repository cache.
+var_7: &restore_cache
+  restore_cache:
+    keys:
+      - *cache_key
+
+# Saves the cache for the current npm lock file. We store the node modules cache
+# in order to make subsequent builds faster.
+var_8: &save_cache
+  save_cache:
+    key: *cache_key
+    paths:
+      - "node_modules"
+
+# Job step that ensures that the node module dependencies are installed and up-to-date.
+var_10: &npm_install
+  run:
+    name: "Installing project dependencies"
+    command: npm install
+
+# Attaches the release output which has been stored in the workspace to the current job.
+# https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
+var_13: &attach_release_output
+  attach_workspace:
+    at: dist/
+
+# Branch filter that we can specify for jobs that should only run on publish branches.
+var_14: &publish_branches_filter
+  tags:
+    only: /^v\d+\.\d+\.\d+$/
+
+# -----------------------------
+# Container version of CircleCI
+# -----------------------------
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+
+# -----------------------------------------------------------------------------------------
+# Job definitions. Jobs which are defined just here, will not run automatically. Each job
+# must be part of a workflow definition in order to run for PRs and push builds.
+# -----------------------------------------------------------------------------------------
 jobs:
   build:
-    docker:
-      - image: circleci/node:12-browsers
+    <<: *job_defaults
     steps:
       - checkout
-      - run: npm ci
-      - run: 'npm run build:zipkin'
-      - save_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+      - *restore_cache
+      - *npm_install
+      - run:
+          name: "Build project"
+          command: npm run build
+
+  # ----------------------------------------------------------------------------
+  # Job that runs all integration tests.
+  # ----------------------------------------------------------------------------
+  integration_tests:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - *restore_cache
+      - *npm_install
+      - run:
+          name: "Start integration tests"
+          command: npm run test:ci
+
+  # -----------------------------------------------------------------
+  # Job that runs the e2e tests with Protractor and Chromium headless
+  # -----------------------------------------------------------------
+  e2e_tests:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - *restore_cache
+      - *npm_install
+      - run:
+          name: "Start e2e tests"
+          command: npm run e2e:ci
+
+  # -------------------------------------------------------------------------------------------
+  # Job that builds all release packages.
+  # -------------------------------------------------------------------------------------------
+  build_release_packages:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - *restore_cache
+      - *npm_install
+      - run: npm run build:ci
+      - persist_to_workspace:
+          root: dist
           paths:
-            - "node_modules"
-            - "dist"
-  test:
-    docker:
-      - image: circleci/node:12-browsers
+            - "dist/**/*"
+
+  # ----------------------------------
+  # Lint job.
+  # ----------------------------------
+  lint:
+    <<: *job_defaults
     steps:
       - checkout
-      - restore_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-      - run: xvfb-run -a npm run test:zipkin:ci
+      - *restore_cache
+      - *npm_install
+      - run:
+          name: "Start linting"
+          command: npm run lint
+      - *save_cache
+
+  # ----------------------------------------
+  # Job that publishes the build snapshots
+  # ----------------------------------------
+  publish_snapshots:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - *restore_cache
+      - *attach_release_output
+      - *npm_install
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish --access public
+
+
 workflows:
-  build-and-test:
+  version: 2
+  default_workflow:
     jobs:
       - build
-      - test:
+      - integration_tests
+      - e2e_tests
+      - lint
+      - build_release_packages:
+          filters: *publish_branches_filter
+      - publish_snapshots:
           requires:
-            - build
+            - build_release_packages
