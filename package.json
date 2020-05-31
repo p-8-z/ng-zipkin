@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "npm run stop:zipkin || concurrently \\\"npm run start:express\\\" \\\"npm run start:angular\\\" \\\"npm run start:zipkin\\\"\"",
-    "start:express": "npm run build:express && node ./dist/express-zipkin/dist/express.js",
+    "start:express": "npm run build:express && node ./dist/express-zipkin/express.js",
     "start:angular": "ng build ng-zipkin && ng serve angular-zipkin",
     "start:zipkin": "docker container start zipkin || docker run --name zipkin -p 9411:9411 -d openzipkin/zipkin-slim",
     "stop:zipkin": "docker container stop zipkin",

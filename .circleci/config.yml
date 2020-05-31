@@ -37,6 +37,8 @@ var_8: &attach_release_output
 
 # Branch filter that we can specify for jobs that should only run on publish branches.
 var_9: &publish_branches_filter
+  branches:
+    ignore: /.*/
   tags:
     only: /^v\d+\.\d+\.\d+$/
 

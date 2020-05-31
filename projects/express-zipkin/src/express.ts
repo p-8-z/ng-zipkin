@@ -1,5 +1,4 @@
 const express = require('express');
-const morgan = require('morgan');
 const {BatchRecorder, ExplicitContext, jsonEncoder, Tracer} = require('zipkin');
 const {expressMiddleware} = require('zipkin-instrumentation-express');
 const {HttpLogger} = require('zipkin-transport-http');
@@ -20,8 +19,6 @@ const port = process.env.PORT || 3000;
 
 // Add the Zipkin middleware
 app.use(expressMiddleware({tracer}));
-
-app.use(morgan('dev'));
 
 app.get('/api/names', (req, res, _) => {
   res.json(['Tony', 'Lisa', 'Michael', 'Ginger', 'Food']);

@@ -1,4 +1,13 @@
-<ul>
-  <li *ngFor="let name of names">{{name}}</li>
-</ul>
-<button (click)="refresh()">Refresh</button>
+<div class=".w-full h-screen flex flex-col">
+  <div class="flex-grow"></div>
+  <div class="justify-center">
+    <p class="text-center text-lg">NG-Zipkin testing Angular APP</p>
+    <p class="px-5">Select route:</p>
+    <div class="px-5 flex flex-row justify-center">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" routerLink="/tracing-get">
+        TracingGet
+      </button>
+    </div>
+  </div>
+  <div class="flex-grow"></div>
+</div>
