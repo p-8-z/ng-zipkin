@@ -22,11 +22,11 @@
     "build:angular": "ng build angular-zipkin",
     "build:zipkin": "ng build ng-zipkin",
     "test": "ng test",
-    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:ci": "npm run clean && npm run build && ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:zipkin": "ng test ng-zipkin",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "e2e:ci": "ng e2e --protractor-config=projects/angular-zipkin/e2e/protractor-ci.conf.js",
+    "e2e:ci": "npm run clean && npm run build && ng e2e --protractor-config=projects/angular-zipkin/e2e/protractor-ci.conf.js",
     "clean": "rimraf ./dist"
   },
   "private": true,

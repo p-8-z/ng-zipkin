@@ -22,7 +22,6 @@ var_6: &save_cache
     key: *cache_key
     paths:
       - "node_modules"
-      - "dist"
 
 # Job step that ensures that the node module dependencies are installed and up-to-date.
 var_7: &npm_install
@@ -143,7 +142,7 @@ workflows:
       - build
       - integration_tests:
           requires:
-            - build_release_packages
+            - build
       - e2e_tests:
           requires:
             - build
