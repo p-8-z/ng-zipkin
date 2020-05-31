@@ -1,23 +1,23 @@
 var_1: &docker_image circleci/node:12.9.1
+var_2: &docker-browser-image circleci/node:12.9.1-browsers
 
 # Read more here: https://circleci.com/docs/2.0/caching/#restoring-cache.
 var_3: &cache_key ng-zipkin-{{ checksum "package-lock.json" }}
 
 # Settings common to each job
-var_5: &job_defaults
+var_4: &job_defaults
   docker:
     - image: *docker_image
 
-# Restores the cache that could be available for the current Yarn lock file. The cache usually
-# includes the node modules and the Bazel repository cache.
-var_7: &restore_cache
+# Restores the cache that could be available for the current npm lock file.
+var_5: &restore_cache
   restore_cache:
     keys:
       - *cache_key
 
 # Saves the cache for the current npm lock file. We store the node modules cache
 # in order to make subsequent builds faster.
-var_8: &save_cache
+var_6: &save_cache
   save_cache:
     key: *cache_key
     paths:
@@ -25,19 +25,19 @@ var_8: &save_cache
       - "dist"
 
 # Job step that ensures that the node module dependencies are installed and up-to-date.
-var_10: &npm_install
+var_7: &npm_install
   run:
     name: "Installing project dependencies"
     command: npm install
 
 # Attaches the release output which has been stored in the workspace to the current job.
 # https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
-var_13: &attach_release_output
+var_8: &attach_release_output
   attach_workspace:
     at: dist/
 
 # Branch filter that we can specify for jobs that should only run on publish branches.
-var_14: &publish_branches_filter
+var_9: &publish_branches_filter
   tags:
     only: /^v\d+\.\d+\.\d+$/
 
@@ -65,7 +65,8 @@ jobs:
   # Job that runs all integration tests.
   # ----------------------------------------------------------------------------
   integration_tests:
-    <<: *job_defaults
+    docker:
+      - image: *docker-browser-image
     steps:
       - checkout
       - *restore_cache
@@ -78,7 +79,8 @@ jobs:
   # Job that runs the e2e tests with Protractor and Chromium headless
   # -----------------------------------------------------------------
   e2e_tests:
-    <<: *job_defaults
+    docker:
+      - image: *docker-browser-image
     steps:
       - checkout
       - *restore_cache
@@ -140,7 +142,11 @@ workflows:
     jobs:
       - build
       - integration_tests
+        requires:
+          - build
       - e2e_tests
+        requires:
+          - build
       - lint
       - build_release_packages:
           filters: *publish_branches_filter
